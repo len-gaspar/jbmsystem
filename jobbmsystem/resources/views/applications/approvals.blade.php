@@ -22,11 +22,52 @@
 
             <!-- Content -->
             <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 class="text-lg font-bold text-gray-900 mb-4">Pending Approvals</h3>
-                <p class="text-gray-500">This page will show applications waiting for your approval.</p>
+                <h3 class="text-lg font-bold text-gray-900 mb-6">Pending Approvals</h3>
+                
+                @if($applications->isEmpty())
+                    <p class="text-gray-500">No applications waiting for approval.</p>
+                @else
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-gray-400 text-xs uppercase font-bold border-b border-gray-100">
+                                    <th class="pb-4">Applicant</th>
+                                    <th class="pb-4">Job Title</th>
+                                    <th class="pb-4">Status</th>
+                                    <th class="pb-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                @foreach($applications as $application)
+                                    <tr>
+                                        <td class="py-4 text-sm text-gray-900">{{ $application->user->name ?? 'Unknown' }}</td>
+                                        <td class="py-4 text-sm text-gray-600">{{ $application->job->title ?? 'N/A' }}</td>
+                                        <td class="py-4 text-sm">
+                                            <span class="px-2 py-1 rounded text-[10px] font-bold uppercase {{ $application->status == 'approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                                {{ $application->status ?? 'pending' }}
+                                            </span>
+                                        </td>
+                                        <td class="py-4 text-sm">
+                                            @if($application->status !== 'approved')
+                                                <form action="{{ route('applications.update', $application->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit" class="text-indigo-600 font-bold hover:underline">
+                                                        Approve
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="text-gray-400 font-medium">Approved</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
-    
 </x-app-layout>
-
