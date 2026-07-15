@@ -1,11 +1,15 @@
 <?php
 
+use App\Models\Job;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    // Fetch all jobs, perhaps ordered by newest
+    $jobs = Job::latest()->take(5)->get(); 
+    return view('welcome', compact('jobs'));
 });
 
 // The Dashboard route required by Laravel Breeze
@@ -37,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('jobs', JobController::class);
 
-Route::get('/applications/approvals', [ApplicationController::class, 'approvals'])->name('applications.approvals');
+Route::get('/applications/approvals', [App\Http\Controllers\ApplicationController::class, 'approvals'])
+    ->name('applications.approvals');
 
 require __DIR__.'/auth.php';
