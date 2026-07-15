@@ -44,4 +44,8 @@ Route::resource('jobs', JobController::class);
 Route::get('/applications/approvals', [App\Http\Controllers\ApplicationController::class, 'approvals'])
     ->name('applications.approvals');
 
+    // Use PATCH because we are updating an existing record
+Route::patch('/applications/{application}/update', [App\Http\Controllers\ApplicationController::class, 'update'])
+    ->name('applications.update');
+
 require __DIR__.'/auth.php';

@@ -34,7 +34,6 @@
             <!-- Job Listings Grid -->
             <div class="space-y-4">
                 @if($jobs->isEmpty())
-                    <!-- Empty State -->
                     <div class="text-center bg-white rounded-2xl border border-gray-100 p-16">
                         <div class="w-12 h-12 bg-gray-50 text-gray-400 rounded-xl flex items-center justify-center mx-auto mb-4">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -47,11 +46,10 @@
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         @foreach($jobs as $job)
-                            <!-- Interactive Job Card -->
                             <div class="group relative bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-100/80 transition-all duration-300 flex flex-col justify-between">
                                 <div class="space-y-4">
                                     
-                                    <!-- Card Header: Title & Badge -->
+                                    <!-- Card Header -->
                                     <div class="flex justify-between items-start gap-4">
                                         <div>
                                             <h3 class="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-150 text-lg">
@@ -59,34 +57,38 @@
                                             </h3>
                                             <p class="text-sm text-gray-500 font-medium mt-0.5">{{ $job->company_name }}</p>
                                         </div>
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100/50 whitespace-nowrap">
-                                            {{ $job->location }}
-                                        </span>
+                                        <div class="flex flex-col gap-2 items-end">
+                                            <!-- Location Badge -->
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-gray-100 text-gray-600 whitespace-nowrap">
+                                                {{ $job->location }}
+                                            </span>
+                                            <!-- Job Type Badge -->
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-indigo-50 text-indigo-700 border border-indigo-100/50 whitespace-nowrap">
+                                                {{ $job->job_type ?? 'N/A' }}
+                                            </span>
+                                        </div>
                                     </div>
 
-                                    <!-- Description Snippet -->
                                     <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed">
                                         {{ Str::limit($job->description, 140) }}
                                     </p>
                                 </div>
 
-                                <!-- Card Footer: Salary & View Link -->
-<div class="flex items-center justify-between pt-6 mt-6 border-t border-gray-50">
-    <div class="flex items-center gap-1.5 text-emerald-600">
-        <!-- Using the Peso character directly for the icon -->
-        <span class="text-sm font-black">₱</span>
-        <span class="text-xs font-bold tracking-tight">
-            {{ $job->salary ? number_format($job->salary, 2) : 'Not specified' }}
-        </span>
-    </div>
+                                <div class="flex items-center justify-between pt-6 mt-6 border-t border-gray-50">
+                                    <div class="flex items-center gap-1.5 text-emerald-600">
+                                        <span class="text-sm font-black">₱</span>
+                                        <span class="text-xs font-bold tracking-tight">
+                                            {{ $job->salary ? number_format($job->salary, 2) : 'Not specified' }}
+                                        </span>
+                                    </div>
 
-    <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center text-xs font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-150 gap-1">
-        Details
-        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform duration-150" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-        </svg>
-    </a>
-</div>
+                                    <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center text-xs font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-150 gap-1">
+                                        Details
+                                        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform duration-150" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
                         @endforeach
                     </div>

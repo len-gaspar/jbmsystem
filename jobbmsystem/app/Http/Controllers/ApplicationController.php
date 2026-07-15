@@ -16,4 +16,19 @@ class ApplicationController extends Controller
         
         return view('applications.approvals', compact('applications'));
     }
+
+    public function update(Request $request, Application $application)
+{
+    // Validate that the request contains the status you want
+    $request->validate([
+        'status' => 'required|in:approved,rejected',
+    ]);
+
+    // Update the status
+    $application->update([
+        'status' => $request->status,
+    ]);
+
+    return back()->with('success', 'Application status updated successfully!');
+}
 }

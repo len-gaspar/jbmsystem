@@ -39,6 +39,16 @@
                         </div>
                     </div>
 
+                    <div class="mt-4">
+    <label class="block text-sm font-medium text-gray-700">Job Type</label>
+    <select name="job_type" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" required>
+        <option value="" disabled selected>Select job type</option>
+        <option value="Full-time" {{ (isset($job) && $job->job_type == 'Full-time') ? 'selected' : '' }}>Full-time</option>
+        <option value="Part-time" {{ (isset($job) && $job->job_type == 'Part-time') ? 'selected' : '' }}>Part-time</option>
+        <option value="Hybrid" {{ (isset($job) && $job->job_type == 'Hybrid') ? 'selected' : '' }}>Hybrid</option>
+    </select>
+</div>
+
                     <!-- Description -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-700">Description</label>

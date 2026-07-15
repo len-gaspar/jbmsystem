@@ -12,6 +12,7 @@ class Job extends Model
         'company_name',
         'location',
         'description',
+        'job_type',
         'salary',
         'apply_link'
     ];

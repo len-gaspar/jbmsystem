@@ -38,7 +38,10 @@
                         <h3 class="font-bold text-lg text-gray-950">{{ $job->title }}</h3>
                         <p class="text-sm font-medium text-indigo-600">{{ $job->company_name ?? 'Company Name' }}</p>
                     </div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-2 py-1 rounded-md">Full-time</span>
+                    <!-- UPDATED: Dynamic Job Type Badge -->
+                    <span class="text-[10px] font-bold uppercase tracking-widest bg-indigo-50 text-indigo-700 border border-indigo-100 px-2 py-1 rounded-md">
+                        {{ $job->job_type ?? 'N/A' }}
+                    </span>
                 </div>
                 
                 <p class="text-sm text-gray-500 mb-6 line-clamp-2">
