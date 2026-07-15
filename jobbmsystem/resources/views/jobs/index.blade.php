@@ -13,23 +13,25 @@
             </div>
 
             <!-- Search and Filter Bar -->
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-3">
-                <div class="flex-1 relative">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </span>
-                    <input 
-                        type="text" 
-                        placeholder="Search by role title, keywords, or company..." 
-                        class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200/80 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition duration-150 placeholder-gray-400"
-                    >
-                </div>
-                <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium text-sm transition shadow-sm">
-                    Search Jobs
-                </button>
-            </div>
+<form action="{{ route('jobs.index') }}" method="GET" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-3">
+    <div class="flex-1 relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+        </span>
+        <input 
+            type="text" 
+            name="search" 
+            value="{{ request('search') }}" 
+            placeholder="Search by role title, keywords, or company..." 
+            class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200/80 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition duration-150 placeholder-gray-400"
+        >
+    </div>
+    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium text-sm transition shadow-sm">
+        Search Jobs
+    </button>
+</form>
 
             <!-- Job Listings Grid -->
             <div class="space-y-4">

@@ -14,11 +14,27 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
-    {
-        $jobs = Job::with('user')->latest()->get();
-        return view('jobs.index', compact('jobs'));
+    public function index(Request $request)
+{
+    // Start the query
+    $query = \App\Models\Job::query();
+
+    // If a search term exists, filter the results
+    if ($request->filled('search')) {
+        $searchTerm = $request->search;
+        
+        $query->where(function($q) use ($searchTerm) {
+            $q->where('title', 'like', '%' . $searchTerm . '%')
+              ->orWhere('company_name', 'like', '%' . $searchTerm . '%')
+              ->orWhere('description', 'like', '%' . $searchTerm . '%');
+        });
     }
+
+    // Get the jobs (latest first)
+    $jobs = $query->latest()->get();
+
+    return view('jobs.index', compact('jobs'));
+}
 
     /**
      * Show the form for creating a new resource.
