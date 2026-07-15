@@ -38,32 +38,36 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                @foreach($applications as $application)
-                                    <tr>
-                                        <td class="py-4 text-sm text-gray-900">{{ $application->user->name ?? 'Unknown' }}</td>
-                                        <td class="py-4 text-sm text-gray-600">{{ $application->job->title ?? 'N/A' }}</td>
-                                        <td class="py-4 text-sm">
-                                            <span class="px-2 py-1 rounded text-[10px] font-bold uppercase {{ $application->status == 'approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
-                                                {{ $application->status ?? 'pending' }}
-                                            </span>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            @if($application->status !== 'approved')
-                                                <form action="{{ route('applications.update', $application->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="approved">
-                                                    <button type="submit" class="text-indigo-600 font-bold hover:underline">
-                                                        Approve
-                                                    </button>
-                                                </form>
-                                            @else
-                                                <span class="text-gray-400 font-medium">Approved</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+    @foreach($applications as $application)
+        <tr>
+            <td class="py-4">{{ $application->user->name }}</td>
+            <td class="py-4">{{ $application->job->title }}</td>
+            <td class="py-4">
+                <span class="px-2 py-1 rounded text-xs font-bold {{ $application->status == 'approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                    {{ strtoupper($application->status) }}
+                </span>
+            </td>
+            <td class="py-4">
+                @if($application->status !== 'approved')
+                    <form action="{{ route('applications.update', $application->id) }}" method="POST" class="flex items-center gap-2">
+                        @csrf @method('PATCH')
+                        <input type="hidden" name="status" value="approved">
+                        
+                        <!-- Date & Time Picker -->
+                        <input type="datetime-local" name="interview_date" required 
+                               class="text-xs border-gray-300 rounded-md">
+                        
+                        <button type="submit" class="text-indigo-600 font-bold hover:underline">Approve</button>
+                    </form>
+                @else
+                    <span class="text-xs text-gray-500">
+                        {{ $application->interview_date ? \Carbon\Carbon::parse($application->interview_date)->format('M d, Y - h:i A') : 'No Date Set' }}
+                    </span>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</tbody>
                         </table>
                     </div>
                 @endif

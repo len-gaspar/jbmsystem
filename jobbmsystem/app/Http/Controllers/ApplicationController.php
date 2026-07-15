@@ -19,16 +19,16 @@ class ApplicationController extends Controller
 
     public function update(Request $request, Application $application)
 {
-    // Validate that the request contains the status you want
-    $request->validate([
+    $validated = $request->validate([
         'status' => 'required|in:approved,rejected',
+        'interview_date' => 'nullable|date', // Validate the date
     ]);
 
-    // Update the status
     $application->update([
         'status' => $request->status,
+        'interview_date' => $request->interview_date,
     ]);
 
-    return back()->with('success', 'Application status updated successfully!');
+    return back()->with('success', 'Application updated!');
 }
 }
