@@ -17,7 +17,7 @@ class JobController extends Controller
     public function index(Request $request)
 {
     // Start the query
-    $query = \App\Models\Job::query();
+    $query = Job::query();
 
     // If a search term exists, filter the results
     if ($request->filled('search')) {
